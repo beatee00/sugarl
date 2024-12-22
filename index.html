@@ -23,25 +23,19 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: black; /* 검정 배경 추가 */
       z-index: 999;
     }
 
     video {
       width: 100%;
       height: auto;
-      max-width: 100%;
-      max-height: 100%;
-      aspect-ratio: 16 / 9; /* 비디오의 종횡비 유지 */
-      object-fit: contain; /* 비디오가 잘리지 않도록 설정 */
-      background-color: black;
+      object-fit: cover;
     }
 
-    @media (max-width: 768px) {
+    @media (orientation: portrait) {
       video {
-        object-fit: contain;
-        width: 100%;
-        height: auto;
+        height: 100%;
+        width: auto; /* 세로 화면에서 폭보다 높이를 기준으로 맞춤 */
       }
     }
 
@@ -105,19 +99,10 @@
       const content = document.querySelector(".content");
       const video = document.querySelector("video");
 
-      // 비디오 종료 이벤트
       video.onended = () => {
         content.classList.add("show");
-        video.style.display = "none"; // 비디오 제거
+        video.style.display = "none"; // 영상 종료 후 제거
       };
-
-      // Fallback: 비디오가 종료되지 않을 경우 강제로 콘텐츠 표시
-      setTimeout(() => {
-        if (!content.classList.contains("show")) {
-          content.classList.add("show");
-          video.style.display = "none";
-        }
-      }, 10000); // 10초 후 강제 실행
     });
   </script>
 </body>
